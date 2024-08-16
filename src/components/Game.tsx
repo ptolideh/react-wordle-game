@@ -12,7 +12,7 @@ const answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
 console.info({ answer });
 
-export type GameStatus = "win" | "loose" | "active";
+export type GameStatus = "win" | "lose" | "active";
 
 export default function Game() {
   const [guesses, addGuess] = useState<string[]>([]);
@@ -35,7 +35,7 @@ export default function Game() {
       const allCharsCorrect =
         lastGuess.filter((char) => char.status === STATUSES.correct).length ===
         5;
-      setGameStatus(allCharsCorrect ? "win" : "loose");
+      setGameStatus(allCharsCorrect ? "win" : "lose");
     }
   }, [validatedGuesses]);
 
