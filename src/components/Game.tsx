@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { checkGuess, ResultType, STATUSES } from "../game-helper";
 import GameResultBanner from "./GameResultBanner";
 import Keyboard from "./Keyboard";
+import { NUM_OF_GUESSES_ALLOWED } from "../constants";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -43,12 +44,12 @@ export default function Game() {
       lastGuess?.filter((char) => char.status === STATUSES.correct).length ===
       5;
 
-    if (validatedGuesses.length < 6 && allCharsCorrect) {
+    if (validatedGuesses.length < NUM_OF_GUESSES_ALLOWED && allCharsCorrect) {
       setGameStatus("win");
     }
 
     /* end of game */
-    if (validatedGuesses.length === 6) {
+    if (validatedGuesses.length === NUM_OF_GUESSES_ALLOWED) {
       setGameStatus(allCharsCorrect ? "win" : "lose");
     }
   }, [validatedGuesses]);
