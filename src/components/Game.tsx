@@ -24,18 +24,26 @@ export default function Game() {
     addGuess([...guesses, newGuess]);
   };
 
+  /* validate each letter */
   useEffect(() => {
     if (guesses.length > 0) {
       setValidatedGuesses(guesses.map((guess) => checkGuess(guess, answer)));
     }
   }, [guesses]);
 
+  /* validate overall answer */
   useEffect(() => {
+    const lastGuess = validatedGuesses[validatedGuesses.length - 1];
+    const allCharsCorrect =
+      lastGuess?.filter((char) => char.status === STATUSES.correct).length ===
+      5;
+
+    if (validatedGuesses.length < 6 && allCharsCorrect) {
+      setGameStatus("win");
+    }
+
+    /* end of game */
     if (validatedGuesses.length === 6) {
-      const lastGuess = validatedGuesses[validatedGuesses.length - 1];
-      const allCharsCorrect =
-        lastGuess.filter((char) => char.status === STATUSES.correct).length ===
-        5;
       setGameStatus(allCharsCorrect ? "win" : "lose");
     }
   }, [validatedGuesses]);
