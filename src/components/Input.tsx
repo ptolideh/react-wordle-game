@@ -1,9 +1,24 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, CSSProperties, FormEvent, useState } from "react";
+
+const styles: { [k: string]: CSSProperties } = {
+  inputWrapper: {
+    display: "flex",
+    alignItems: "middle",
+    gap: 2,
+  },
+  reset: {
+    padding: "8px 12px",
+    backgroundColor: "lightgray",
+    borderRadius: 4,
+  },
+};
 
 export default function Input({
   handleGuessSubmit,
+  handleReset,
 }: {
   handleGuessSubmit: (newGuess: string) => void;
+  handleReset: () => void;
 }) {
   const [word, setWord] = useState<string>("");
 
@@ -27,16 +42,21 @@ export default function Input({
     <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="guess-input">Enter guess: </label>
-        <input
-          required
-          minLength={5}
-          maxLength={5}
-          type="text"
-          id="guess-input"
-          name="guess-input"
-          value={word}
-          onChange={handleChange}
-        />
+        <div style={styles.inputWrapper}>
+          <input
+            required
+            minLength={5}
+            maxLength={5}
+            type="text"
+            id="guess-input"
+            name="guess-input"
+            value={word}
+            onChange={handleChange}
+          />
+          <button type="button" style={styles.reset} onClick={handleReset}>
+            Reset
+          </button>
+        </div>
       </form>
     </div>
   );

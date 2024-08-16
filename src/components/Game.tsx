@@ -16,12 +16,17 @@ console.info({ answer });
 export type GameStatus = "win" | "lose" | "active";
 
 export default function Game() {
-  const [guesses, addGuess] = useState<string[]>([]);
+  const [guesses, setGuess] = useState<string[]>([]);
   const [validatedGuesses, setValidatedGuesses] = useState<ResultType[]>([]);
   const [gameStatus, setGameStatus] = useState<GameStatus>("active");
 
   const handleGuessSubmit = (newGuess: string) => {
-    addGuess([...guesses, newGuess]);
+    setGuess([...guesses, newGuess]);
+  };
+
+  const handleReset = () => {
+    setGuess([]);
+    setValidatedGuesses([]);
   };
 
   /* validate each letter */
@@ -56,7 +61,7 @@ export default function Game() {
         answer={answer}
       />
       <GuessList guesses={validatedGuesses} />
-      <Input handleGuessSubmit={handleGuessSubmit} />
+      <Input handleGuessSubmit={handleGuessSubmit} handleReset={handleReset} />
       <Keyboard guesses={validatedGuesses} />
     </>
   );
