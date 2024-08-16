@@ -4,10 +4,12 @@ export const STATUSES = {
   misplaced: "misplaced",
 } as const;
 
-export type ResultType = Array<{
+export type CharDetail = {
   letter: string;
   status: keyof typeof STATUSES;
-}>;
+};
+
+export type ResultType = Array<CharDetail>;
 
 export function checkGuess(guess: string, answer: string): ResultType {
   // This constant is a placeholder that indicates we've successfully
@@ -61,3 +63,18 @@ export function checkGuess(guess: string, answer: string): ResultType {
 
   return result;
 }
+
+export type GuessHashMap = Record<string, CharDetail["status"]>;
+
+export const guessHashMap = (guesses: ResultType[]): GuessHashMap => {
+  const res: GuessHashMap = {};
+  guesses.forEach((guessChars) => {
+    guessChars.forEach((char) => {
+      if (res[char.letter]) {
+        return;
+      }
+      res[char.letter] = char.status;
+    });
+  });
+  return res;
+};

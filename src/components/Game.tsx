@@ -5,6 +5,7 @@ import GuessList from "./GuessList";
 import { useEffect, useState } from "react";
 import { checkGuess, ResultType, STATUSES } from "../game-helper";
 import GameResultBanner from "./GameResultBanner";
+import Keyboard from "./Keyboard";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -48,6 +49,7 @@ export default function Game() {
       />
       <GuessList guesses={validatedGuesses} />
       <Input handleGuessSubmit={handleGuessSubmit} />
+      <Keyboard guesses={validatedGuesses} />
     </>
   );
 }
